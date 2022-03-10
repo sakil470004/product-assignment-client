@@ -46,6 +46,8 @@ function App() {
           </Route>
 
         </Routes>
+        {/* this is footer fixed field show */}
+        <div style={{width:'100%',height:'120px'}}></div>
         <Footer />
       </Router>
     </div>

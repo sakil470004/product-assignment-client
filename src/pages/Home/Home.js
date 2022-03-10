@@ -3,34 +3,42 @@ import './Home.css'
 function Home() {
 
     const [products, setProducts] = useState([])
-    
+    const [isLoading, setIsLoading] = useState(false)
+
     useEffect(() => {
+        setIsLoading(true)
         fetch('https://product-assignment.herokuapp.com/product')
             .then(res => res.json())
-            .then(data => setProducts(data))
+            .then(data => {
+                setProducts(data)
+                setIsLoading(false)
+            })
     }, [])
     return (
-        <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',margin:'1rem 0' }}>
-            <div className="container portfolio__container">
+        isLoading ? <h1>Loading....</h1> :
 
-                {products.map(dt => {
+            <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '1rem 0' }}>
+                <div className="container portfolio__container">
 
-                    return (
-                        <article className="portfolio__item" key={dt._id}>
-                            <div className="portfolio__item-image">
-                                <img src={dt.img} alt="" />
-                            </div>
-                            <h3>{dt.name}</h3>
-                            <div className='home__overlay'>
-                                <h2>{dt.name}</h2>
-                                <h2 style={{color:'greenyellow'}}>{dt.price}$</h2>
-                                <h4 style={{color:'red'}}>{dt.stockKeepingUnit} Left in Stock</h4>
-                            </div>
-                        </article>)
-                })}
+                    {products.map(dt => {
+
+                        return (
+                            <article className="portfolio__item" key={dt._id}>
+                                <div className="portfolio__item-image">
+                                    <img src={dt.img} alt="" />
+                                </div>
+                                <h3>{dt.name}</h3>
+                                <div className='home__overlay'>
+                                    <h2>{dt.name}</h2>
+                                    <h2 style={{ color: 'greenyellow' }}>{dt.price}$</h2>
+                                    <h4 style={{ color: 'red' }}>{dt.stockKeepingUnit} Left in Stock</h4>
+                                </div>
+                            </article>)
+                    })}
+                </div>
+
             </div>
 
-        </div>
     )
 }
 
